@@ -1,6 +1,6 @@
 spring:
   application:
-    name: userservice
+    name: chatservice
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -22,7 +22,7 @@ spring:
       auto-commit: true
 
 server:
-  port: 9091
+  port: 9090
 
 eureka:
  client:
