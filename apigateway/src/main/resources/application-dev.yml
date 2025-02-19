@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: apigateway
+
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/user_service_db
+#    username: root
+#    password: root
+
+#  jpa:
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+
+#    hikari:
+#      connection-timeout: 30000
+#      maximum-pool-size: 10
+#      minimum-idle: 5
+#      idle-timeout: 300000
+#      max-lifetime: 1200000
+#      auto-commit: true
+
+server:
+  port: 9090
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8765/eureka
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    lease-expiration-duration-in-seconds: 180
+    lease-renewal-interval-in-seconds: 180  # This should be lease-renewal-interval-in-seconds
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+logging:
+  level:
+    root: INFO
+#    org.springframework: DEBUG
+#    com.netflix: DEBUG
+#    org.springframework.cloud: DEBUG
+#    com.netflix.eureka: DEBUG
+#    com.netflix.discovery: DEBUG
