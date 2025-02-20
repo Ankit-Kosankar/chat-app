@@ -38,7 +38,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health , info , mappings
 
 logging:
   level:
@@ -48,3 +48,23 @@ logging:
 #    org.springframework.cloud: DEBUG
 #    com.netflix.eureka: DEBUG
 #    com.netflix.discovery: DEBUG
+
+
+
+  cloud:
+    gateway:
+      routes:
+        - id: userservice
+          uri: USERSERVICE  # this is how you locate the service
+          predicates:
+            - Path=/api/users/**
+        
+        - id: chatservice
+          uri: CHATSERVICE
+          predicates:
+            - Path=/api/chats/**
+
+        - id: notificationservice
+          uri: NOTIFICATIONSERVICE
+          predicates:
+            - Path=/api/notifications/**

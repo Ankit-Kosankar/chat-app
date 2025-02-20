@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class Test {
 
 
-	@GetMapping
+	@GetMapping("/test")
 	public ResponseEntity<?> test()
 	{
 		Map<String,Object> map = new HashMap<>();
-		map.put("info", "This is the Test API Call");
+		map.put("info", "User Service Working ...");
 		return new ResponseEntity<>(map,HttpStatus.OK);
 	}
     
