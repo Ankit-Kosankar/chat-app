@@ -2,6 +2,43 @@ spring:
   application:
     name: apigateway
 
+  cloud:
+      gateway:
+          discovery:
+            locator:
+              enabled: false
+              lower-case-service-id: true
+          routes:
+              - id: userservice
+                uri: lb://userservice
+                predicates:
+                - Path=/api/users/**
+                filters:
+                - RewritePath=/api/users/(?<segment>.*), /${segment}
+
+              - id: chatservice
+                uri: lb://chatservice
+                predicates:
+                - Path=/api/chats/**
+                filters:
+                - RewritePath=/api/chats/(?<segment>.*), /${segment}
+
+              - id: notificationservice
+                uri: lb://notificationservice
+                predicates:
+                - Path=/api/notifications/**
+                filters:
+                - RewritePath=/api/notifications/(?<segment>.*), /${segment}
+
+
+#cloud discovery enabled
+#  discovery:
+#    enabled: true
+
+#cloud gateway locator
+# Automatic Discovery Locator
+#this is responsible for routes automatic config
+  
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql://localhost:3306/user_service_db
@@ -24,22 +61,26 @@ spring:
 server:
   port: 9090
 
+#eureka registry
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8765/eureka
-    fetch-registry: true
-    register-with-eureka: true
+      defaultZone: http://localhost:8765/eureka/
+      fetch-registry: true
+      register-with-eureka: true
   instance:
     lease-expiration-duration-in-seconds: 180
     lease-renewal-interval-in-seconds: 180  # This should be lease-renewal-interval-in-seconds
+    prefer-ip-address: true
 
+#actuator configs
 management:
   endpoints:
     web:
       exposure:
-        include: health , info , mappings
+        include: "*"
 
+#basic logging
 logging:
   level:
     root: INFO
@@ -50,21 +91,27 @@ logging:
 #    com.netflix.discovery: DEBUG
 
 
-
-  cloud:
-    gateway:
-      routes:
-        - id: userservice
-          uri: USERSERVICE  # this is how you locate the service
-          predicates:
-            - Path=/api/users/**
-        
-        - id: chatservice
-          uri: CHATSERVICE
-          predicates:
-            - Path=/api/chats/**
-
-        - id: notificationservice
-          uri: NOTIFICATIONSERVICE
-          predicates:
-            - Path=/api/notifications/**
+# gateway paths or routes
+    
+#cloud:
+#  gateway:
+#  routes:
+#   - id: userservice
+#     uri: lb://USERSERVICE  # Load-balanced URI for Eureka
+#     predicates:
+#     - Path=/api/users/**
+#     - id: chatservice
+#uri: lb://CHATSERVICE
+#predicates:
+#  - Path=/api/chats/**
+#  - id: notificationservice
+#    uri: lb://NOTIFICATIONSERVICE
+#    predicates:
+#    - Path=/api/notifications/**
+#
+##  eureka:
+##   client:
+##      register-with-eureka: true
+##  fetch-registry: true
+##  instance:
+hostname: localhost

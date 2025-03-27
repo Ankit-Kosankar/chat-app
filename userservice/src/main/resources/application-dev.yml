@@ -21,6 +21,7 @@ spring:
       max-lifetime: 1200000
       auto-commit: true
 
+  management:endpoints:web:exposure:include: health,info
 server:
   port: 9091
   servlet:
@@ -35,7 +36,7 @@ eureka:
        lease-expiration-duration-in-seconds=180
        lease-expiration-duration-in-seconds=180
 
-management:endpoints:web:exposure:include: health,info
+
 
 
 
