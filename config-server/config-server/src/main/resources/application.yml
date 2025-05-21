@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: config-server
+
+
+  profiles:
+    active: native #load the configuratin from local file system
+
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:./configrepo
+
+logging:
+  level:
+    root: INFO
+    debug:       
+      org.springframework.boot: DEBUG
+      org.springframework.cloud.config: DEBUG

@@ -13,29 +13,40 @@ spring:
     hibernate:
       ddl-auto: update
 
-    hikari:
-      connection-timeout: 30000
-      maximum-pool-size: 10
-      minimum-idle: 5
-      idle-timeout: 300000
-      max-lifetime: 1200000
-      auto-commit: true
-
-  management:endpoints:web:exposure:include: health,info
-server:
-  port: 9091
-  servlet:
-    context-path: /api/users
-
 eureka:
  client:
-  service-url:
-    defaultZone: http://localhost:8765/eureka
+    service-url:
+      defaultZone: http://localhost:8765/eureka
+ instance:
+   ip-address: 127.0.0.1
+   prefer-ip-address: true
+   instance-id: ${spring.application.name}:${server.port}
 
-    instance:
-       lease-expiration-duration-in-seconds=180
-       lease-expiration-duration-in-seconds=180
+#    hikari:
+#      connection-timeout: 30000
+#      maximum-pool-size: 10
+#      minimum-idle: 5
+#      idle-timeout: 300000
+#      max-lifetime: 1200000
+#      auto-commit: true
 
+#  management:endpoints:web:exposure:include: health,info
+#server:
+#  port: 9091
+#  servlet:
+#    context-path: /api/users
+
+#eureka:
+# client:
+#  service-url:
+#    defaultZone: http://localhost:8765/eureka
+#
+#    instance:
+#       lease-expiration-duration-in-seconds=180
+#       lease-expiration-duration-in-seconds=180
+#      ip-address: 127.0.0.1
+#      prefer-ip-address: true
+#      instance-id: ${spring.application.name}:${server.port}
 
 
 

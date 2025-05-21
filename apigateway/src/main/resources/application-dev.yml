@@ -6,7 +6,7 @@ spring:
       gateway:
           discovery:
             locator:
-              enabled: false
+              enabled: true
               lower-case-service-id: true
           routes:
               - id: userservice
@@ -14,21 +14,21 @@ spring:
                 predicates:
                 - Path=/api/users/**
                 filters:
-                - RewritePath=/api/users/(?<segment>.*), /${segment}
+                - RewritePath=/api/users/(?<segment>.*), /api/users/${segment}
 
               - id: chatservice
                 uri: lb://chatservice
                 predicates:
                 - Path=/api/chats/**
-                filters:
-                - RewritePath=/api/chats/(?<segment>.*), /${segment}
+#                filters:
+#                - RewritePath=/api/chats/(?<segment>.*), /${segment}
 
               - id: notificationservice
                 uri: lb://notificationservice
                 predicates:
                 - Path=/api/notifications/**
-                filters:
-                - RewritePath=/api/notifications/(?<segment>.*), /${segment}
+#                filters:
+#                - RewritePath=/api/notifications/(?<segment>.*), /${segment}
 
 
 #cloud discovery enabled
@@ -66,12 +66,14 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8765/eureka/
-      fetch-registry: true
-      register-with-eureka: true
+#      fetch-registry: true
+#      register-with-eureka: true
   instance:
-    lease-expiration-duration-in-seconds: 180
-    lease-renewal-interval-in-seconds: 180  # This should be lease-renewal-interval-in-seconds
+#    lease-expiration-duration-in-seconds: 180
+#    lease-renewal-interval-in-seconds: 180  # This should be lease-renewal-interval-in-seconds
+    ip-address: 127.0.0.1
     prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
 
 #actuator configs
 management:
@@ -114,4 +116,4 @@ logging:
 ##      register-with-eureka: true
 ##  fetch-registry: true
 ##  instance:
-hostname: localhost
+#hostname: localhost

@@ -7,12 +7,6 @@ spring:
     url: jdbc:mysql://localhost:3306/user_service_db
     username: root
     password: root
-
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-
     hikari:
       connection-timeout: 30000
       maximum-pool-size: 10
@@ -20,6 +14,17 @@ spring:
       idle-timeout: 300000
       max-lifetime: 1200000
       auto-commit: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+         health,info
 
 server:
   port: 9093
@@ -30,12 +35,17 @@ eureka:
  client:
   service-url:
     defaultZone: http://localhost:8765/eureka
+ instance:
+    ip-address: 127.0.0.1
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+    
+    
+#    instance:
+#       lease-expiration-duration-in-seconds=180
+#       lease-expiration-duration-in-seconds=180
 
-    instance:
-       lease-expiration-duration-in-seconds=180
-       lease-expiration-duration-in-seconds=180
 
-management:endpoints:web:exposure:include: health,info
 
 
 
